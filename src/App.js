@@ -49,7 +49,11 @@ export default function App() {
     const [movies, setMovies] = useState(tempMovieData);
     return (
         <>
-            <NavBar movies={movies} />
+            <NavBar>
+                <Logo />
+                <Search />
+                <NumResults movies={movies} />
+            </NavBar>
             <Main movies={movies} />
         </>
     );
@@ -68,14 +72,8 @@ function Search() {
     );
 }
 
-function NavBar({movies}) {
-    return (
-        <nav className="nav-bar">
-            <Logo />
-            <Search />
-            <NumResults movies={movies} />
-        </nav>
-    );
+function NavBar({ children }) {
+    return <nav className="nav-bar">{children}</nav>;
 }
 
 function Logo() {
@@ -87,7 +85,7 @@ function Logo() {
     );
 }
 
-function NumResults({movies}) {
+function NumResults({ movies }) {
     return (
         <p className="num-results">
             Found <strong>{movies}</strong> results
@@ -95,7 +93,7 @@ function NumResults({movies}) {
     );
 }
 
-function ListBox({movies}) {
+function ListBox({ movies }) {
     const [isOpen1, setIsOpen1] = useState(true);
 
     return (
@@ -126,8 +124,7 @@ function Movie({ movie }) {
     );
 }
 
-function MovieList({movies}) {
-    
+function MovieList({ movies }) {
     return (
         <ul className="list">
             {movies?.map((movie) => (
@@ -188,7 +185,7 @@ function WatchedBox() {
     );
 }
 
-function WatchedMoviesList({watched}) {
+function WatchedMoviesList({ watched }) {
     return (
         <ul className="list">
             {watched.map((movie) => (
@@ -198,30 +195,30 @@ function WatchedMoviesList({watched}) {
     );
 }
 
-function WatchedMovie({movie}){
-  return (
-    <li>
-                    <img src={movie.Poster} alt={`${movie.Title} poster`} />
-                    <h3>{movie.Title}</h3>
-                    <div>
-                        <p>
-                            <span>⭐️</span>
-                            <span>{movie.imdbRating}</span>
-                        </p>
-                        <p>
-                            <span>🌟</span>
-                            <span>{movie.userRating}</span>
-                        </p>
-                        <p>
-                            <span>⏳</span>
-                            <span>{movie.runtime} min</span>
-                        </p>
-                    </div>
-                </li>
-  );
+function WatchedMovie({ movie }) {
+    return (
+        <li>
+            <img src={movie.Poster} alt={`${movie.Title} poster`} />
+            <h3>{movie.Title}</h3>
+            <div>
+                <p>
+                    <span>⭐️</span>
+                    <span>{movie.imdbRating}</span>
+                </p>
+                <p>
+                    <span>🌟</span>
+                    <span>{movie.userRating}</span>
+                </p>
+                <p>
+                    <span>⏳</span>
+                    <span>{movie.runtime} min</span>
+                </p>
+            </div>
+        </li>
+    );
 }
 
-function Main( {movies}) {
+function Main({ movies }) {
     return (
         <main className="main">
             <ListBox movies={movies} />
